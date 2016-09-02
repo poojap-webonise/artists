@@ -36,7 +36,9 @@ class UsersController extends AppController {
  */
 	public function index() {
 		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
+    $user['sessionData'] = $this->Session->read('User');
+    $user['paginator'] =  $this->Paginator->paginate();
+		$this->set('users', $user);
 	}
 
   public function login() {
@@ -46,10 +48,22 @@ class UsersController extends AppController {
         $this->Flash->error(__('Invalid username or password, try again'));
       }
       else{
-        $this->redirect(array(
-            'controller' => 'users',
-            'action' => 'index')
-        );
+        $this->Session->write(array('User' => array(
+          'username' => $userExist['User']['username'],
+          'role'=>$userExist['User']['role']
+        )));
+        if($userExist['User']['role'] == 1) {
+          $this->redirect(array(
+              'controller' => 'users',
+              'action' => 'index')
+          );
+        }
+        else
+        {
+          $this->redirect(array(
+            'controller' => 'albums',
+            'action' => 'index'));
+        }
       }
     }
   }

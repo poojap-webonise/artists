@@ -13,7 +13,7 @@
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($users as $user): ?>
+	<?php  foreach ($users['paginator'] as $user): ?>
 	<tr>
 		<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['role']); ?>&nbsp;</td>
@@ -49,6 +49,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Albums'), array('controller' => 'albums', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
+		<li><?php echo $users['sessionData']['role'] == 1 ? '' : $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
