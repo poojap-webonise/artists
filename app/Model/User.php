@@ -31,4 +31,14 @@ class User extends AppModel {
 		)
 	);
 
+  public function isValidUser($username) {
+
+    return $this->find('first', array(
+      'conditions' => array(
+        'User.username' => $username,
+      ),
+      'fields' => array('User.id', 'User.first_name', 'User.last_name', 'User.username','User.password'),
+      'recursive' => -1
+    ));
+  }
 }

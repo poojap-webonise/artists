@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+
+App::uses('UsersAppModel', 'Users.Model');
 /**
  * Users Controller
  *
@@ -37,6 +39,24 @@ class UsersController extends AppController {
 		$this->set('users', $this->Paginator->paginate());
 	}
 
+  public function login() {
+    if ($this->request->is('post')) {
+      $userExist = $this->User->isValidUser($this->request->data['User']['username']);
+      if($userExist['User']['password'] != $this->request->data['User']['password']) {
+        $this->Flash->error(__('Invalid username or password, try again'));
+      }
+      else{
+        $this->redirect(array(
+            'controller' => 'users',
+            'action' => 'index')
+        );
+      }
+    }
+  }
+
+  public function logout() {
+    return $this->redirect($this->Auth->logout());
+  }
 /**
  * view method
  *

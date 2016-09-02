@@ -52,26 +52,18 @@
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('Title'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
+
 	</tr>
 	<?php foreach ($user['Album'] as $album): ?>
 		<tr>
 			<td><?php echo $album['id']; ?></td>
 			<td><?php echo $album['user_id']; ?></td>
 			<td><?php echo $album['title']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'albums', 'action' => 'view', $album['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'albums', 'action' => 'edit', $album['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'albums', 'action' => 'delete', $album['id']), array('confirm' => __('Are you sure you want to delete # %s?', $album['id']))); ?>
-			</td>
+
 		</tr>
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
-		</ul>
 	</div>
 </div>

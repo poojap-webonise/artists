@@ -42,9 +42,6 @@ class CraeteAlbums extends CakeMigration {
           )
         )
       ),
-
-		),
-		'down' => array(
       'create_field' => array(
         'albums' => array(
           'title' => array(
@@ -59,6 +56,10 @@ class CraeteAlbums extends CakeMigration {
           )
         )
       )
+
+		),
+		'down' => array(
+
 		),
 	);
 
