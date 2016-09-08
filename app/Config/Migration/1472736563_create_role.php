@@ -42,7 +42,7 @@ class CreateRole extends CakeMigration {
       )
 		),
 		'down' => array(
-
+      'drop_table'=>array('role')
 		),
 	);
 

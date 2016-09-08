@@ -59,7 +59,7 @@ class CraeteAlbums extends CakeMigration {
 
 		),
 		'down' => array(
-
+      'drop_table'=>array('albums')
 		),
 	);
 
