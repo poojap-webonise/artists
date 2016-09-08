@@ -1,4 +1,5 @@
 <div class="users view">
+  <?php $sessionData = $this->Session->read('User'); ?>
 <h2><?php echo __('User'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
@@ -41,7 +42,9 @@
 		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Albums'), array('controller' => 'albums', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
+
+		<li><?php echo $sessionData['role']==1 ? '' :  $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
+
 	</ul>
 </div>
 <div class="related">

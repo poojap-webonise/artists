@@ -37,7 +37,7 @@ class User extends AppModel {
       'conditions' => array(
         'User.username' => $username,
       ),
-      'fields' => array('User.id', 'User.first_name', 'User.last_name', 'User.username','User.password'),
+      'fields' => array('User.id', 'User.first_name', 'User.last_name', 'User.username','User.password','User.role'),
       'recursive' => -1
     ));
   }

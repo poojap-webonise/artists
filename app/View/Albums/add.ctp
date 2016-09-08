@@ -3,8 +3,13 @@
 	<fieldset>
 		<legend><?php echo __('Add Album'); ?></legend>
 	<?php
-		echo $this->Form->input('user_id');
+    $userSession = $this->Session->read('User');
+    echo  $this->Form->input('user_id', array('type' => 'hidden','value'=> $userSession['userid']));
+
 		echo $this->Form->input('title');
+
+		echo  $this->Form->input('image_path', array('type' => 'file'));
+
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
@@ -14,7 +19,5 @@
 	<ul>
 
 		<li><?php echo $this->Html->link(__('List Albums'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
