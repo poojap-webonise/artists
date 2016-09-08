@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('AlbumsAppModel', 'Albums.Model');
 /**
  * Albums Controller
  *
@@ -23,7 +24,8 @@ class AlbumsController extends AppController {
 	public function index() {
 		$this->Album->recursive = 0;
     $albums['sessionData'] = $this->Session->read('User');
-    $albums['paginator'] =  $this->Paginator->paginate();
+    $albums['getAlbumsByUserid'] = $this->Album->getAlbumsByUserid($albums['sessionData']['userid']);
+    $albums['paginator'] = $this->Paginator->paginate();
 		$this->set('albums', $albums);
 	}
 

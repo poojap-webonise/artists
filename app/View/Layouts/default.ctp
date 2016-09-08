@@ -15,7 +15,7 @@
  */
 
 $cakeDescription = __d('cake_dev', 'Go for an Art');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,6 +39,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $this->Html->link($cakeDescription, ''); ?></h1>
+    <?php echo $this->Html->link(__('Logout'), array('action' => 'logout')); ?>
 		</div>
 		<div id="content">
 

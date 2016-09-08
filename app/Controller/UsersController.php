@@ -50,7 +50,8 @@ class UsersController extends AppController {
       else{
         $this->Session->write(array('User' => array(
           'username' => $userExist['User']['username'],
-          'role'=>$userExist['User']['role']
+          'role'=>$userExist['User']['role'],
+          'userid'=>$userExist['User']['id']
         )));
         if($userExist['User']['role'] == 1) {
           $this->redirect(array(
@@ -69,7 +70,10 @@ class UsersController extends AppController {
   }
 
   public function logout() {
-    return $this->redirect($this->Auth->logout());
+    $this->Session->destroy();
+    return $this->redirect(array(
+      'controller' => 'users',
+      'action' => 'login'));
   }
 /**
  * view method

@@ -2,11 +2,15 @@
 <?php echo $this->Form->create('Album'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Album'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('user_id');
-		echo $this->Form->input('title');
-	?>
+    <?php
+    $userSession = $this->Session->read('User');
+    echo  $this->Form->input('user_id', array('type' => 'hidden','value'=> $userSession['userid']));
+    echo $this->Form->input('user_id');
+    echo $this->Form->input('title');
+
+    echo  $this->Form->input('image_path', array('type' => 'file'));
+
+    ?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>

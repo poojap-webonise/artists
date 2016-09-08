@@ -31,4 +31,15 @@ class Album extends AppModel {
 			'order' => ''
 		)
 	);
+
+  public function getAlbumsByUserid($userid) {
+
+    return $this->find('all', array(
+      'conditions' => array(
+        'Album.user_id' => $userid,
+      ),
+      'fields' => array('Album.id', 'Album.title', 'Album.user_id'),
+      'recursive' => -1
+    ));
+  }
 }

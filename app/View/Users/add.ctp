@@ -7,6 +7,7 @@
 		echo $this->Form->input('password');
 		echo $this->Form->input('first_name');
 		echo $this->Form->input('last_name');
+  echo $this->Form->input('role',array('type'=>'hidden','value'=>2));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

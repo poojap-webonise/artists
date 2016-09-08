@@ -1,21 +1,17 @@
 <div class="albums view">
 <h2><?php echo __('Album'); ?></h2>
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($album['Album']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($album['User']['id'], array('controller' => 'users', 'action' => 'view', $album['User']['id'])); ?>
-			&nbsp;
-		</dd>
+
 		<dt><?php echo __('Title'); ?></dt>
 		<dd>
 			<?php echo h($album['Album']['title']); ?>
 			&nbsp;
 		</dd>
+    <dt><?php echo __('Image'); ?></dt>
+    <dd>
+      <?php  echo $this->Html->image($album['Album']['image_path'], array('alt' => 'CakePHP')); ?>
+      &nbsp;
+    </dd>
 	</dl>
 </div>
 <div class="actions">

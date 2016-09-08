@@ -4,7 +4,6 @@
 	<thead>
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
     <?php if($albums['sessionData']['role'] == 2)
           {?>
@@ -13,12 +12,10 @@
 	</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($albums['paginator'] as $album): ?>
+	<?php foreach ($albums['getAlbumsByUserid'] as $album): ?>
 	<tr>
 		<td><?php echo h($album['Album']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($album['User']['id'], array('controller' => 'users', 'action' => 'view', $album['User']['id'])); ?>
-		</td>
+
 		<td><?php echo h($album['Album']['title']); ?>&nbsp;</td>
     <?php if($albums['sessionData']['role'] == 2)
     { ?>
