@@ -50,9 +50,7 @@ class CreateUsers extends CakeMigration {
             'default' => null
           )
         )
-      )
-		),
-		'down' => array(
+      ),
       'create_field' => array(
         'users' => array(
           'username' => array(
@@ -79,6 +77,9 @@ class CreateUsers extends CakeMigration {
         ),
 
       )
+		),
+		'down' => array(
+
 		),
 	);
 

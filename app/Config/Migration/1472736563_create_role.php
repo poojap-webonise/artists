@@ -30,9 +30,7 @@ class CreateRole extends CakeMigration {
             'default' => null
           )
         )
-      )
-		),
-		'down' => array(
+      ),
       'create_field' => array(
         'role' => array(
           'role' => array(
@@ -42,6 +40,9 @@ class CreateRole extends CakeMigration {
           ),
         )
       )
+		),
+		'down' => array(
+
 		),
 	);
 
