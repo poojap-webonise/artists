@@ -9,6 +9,8 @@
     echo $this->Form->input('title');
 
     echo  $this->Form->input('image_path', array('type' => 'file'));
+   echo __('Image');
+     echo $this->Html->image('image_path', array('alt' => 'CakePHP'));
 
     ?>
 	</fieldset>

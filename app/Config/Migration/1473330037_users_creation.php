@@ -1,12 +1,12 @@
 <?php
-class CraeteAlbums extends CakeMigration {
+class UsersCreation extends CakeMigration {
 
 /**
  * Migration description
  *
  * @var string
  */
-	public $description = 'craete_albums';
+	public $description = 'users_creation';
 
 /**
  * Actions to be performed
@@ -15,51 +15,72 @@ class CraeteAlbums extends CakeMigration {
  */
 	public $migration = array(
 		'up' => array(
-      'create_table'=>array(
-        'albums'=>array(
-          'id'=>array(
+
+      'create_table' => array(
+        'users' => array(
+          'id' => array(
             'type' => 'integer',
             'length' => 11,
             'null' => false,
             'key' => 'primary',
-            'autoIncrement' => true
+            'autoIncrement' => true,
           ),
-          'name'=>array(
+          'username' => array(
             'type' => 'string',
             'null' => false,
             'default' => null
           ),
-          'user_id'=>array(
-            'type' => 'integer',
-            'length' => 11,
-            'null' => false,
-            'key' => 'primary'
-          ),
-          'image_path'=>array(
+          'password' => array(
             'type' => 'string',
+            'null' => false,
+            'default' => null
+          ),
+          'first_name' => array(
+            'type' => 'string',
+            'null' => false,
+            'default' => null
+          ),
+          'last_name' => array(
+            'type' => 'string',
+            'null' => false,
+            'default' => null
+          ),
+          'role' => array(
+            'type' => 'integer',
             'null' => false,
             'default' => null
           )
         )
       ),
       'create_field' => array(
-        'albums' => array(
-          'title' => array(
+        'users' => array(
+          'username' => array(
             'type' => 'string',
             'null' => true,
             'length' => 255
           ),
-          'image_path' => array(
+          'password' => array(
             'type' => 'string',
             'null' => true,
             'length' => 255
-          )
-        )
-      )
+          ),
+          'first_name' => array(
+            'type' => 'string',
+            'null' => true,
+            'length' => 255
+          ),
+          'last_name' => array(
+            'type' => 'string',
+            'null' => true,
+            'length' => 255
+          ),
 
+        ),
+
+      )
 		),
 		'down' => array(
-      'drop_table'=>array('albums')
+      'drop_table'=>array('users')
 		),
 	);
 

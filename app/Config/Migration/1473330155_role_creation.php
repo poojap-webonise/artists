@@ -1,12 +1,12 @@
 <?php
-class CreateRole extends CakeMigration {
+class RoleCreation extends CakeMigration {
 
 /**
  * Migration description
  *
  * @var string
  */
-	public $description = 'create_role';
+	public $description = 'role_creation';
 
 /**
  * Actions to be performed
@@ -15,6 +15,7 @@ class CreateRole extends CakeMigration {
  */
 	public $migration = array(
 		'up' => array(
+
       'create_table'=>array(
         'role'=>array(
           'id'=>array(

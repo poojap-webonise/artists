@@ -1,12 +1,12 @@
 <?php
-class CreateRole extends CakeMigration {
+class AlbumsCreation extends CakeMigration {
 
 /**
  * Migration description
  *
  * @var string
  */
-	public $description = 'create_role';
+	public $description = 'albums_creation';
 
 /**
  * Actions to be performed
@@ -15,34 +15,38 @@ class CreateRole extends CakeMigration {
  */
 	public $migration = array(
 		'up' => array(
+
       'create_table'=>array(
-        'role'=>array(
+        'albums'=>array(
           'id'=>array(
             'type' => 'integer',
             'length' => 11,
             'null' => false,
             'key' => 'primary',
-            'autoIncrement' => true,
+            'autoIncrement' => true
           ),
-          'role'=>array(
+          'title'=>array(
+            'type' => 'string',
+            'null' => false,
+            'default' => null
+          ),
+          'user_id'=>array(
+            'type' => 'integer',
+            'length' => 11,
+            'null' => false,
+            'key' => 'primary'
+          ),
+          'image_path'=>array(
             'type' => 'string',
             'null' => false,
             'default' => null
           )
         )
-      ),
-      'create_field' => array(
-        'role' => array(
-          'role' => array(
-            'type' => 'string',
-            'null' => true,
-            'length' => 255
-          ),
-        )
       )
+
 		),
 		'down' => array(
-      'drop_table'=>array('role')
+      'drop_table'=>array('albums')
 		),
 	);
 

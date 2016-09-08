@@ -79,7 +79,7 @@ class CreateUsers extends CakeMigration {
       )
 		),
 		'down' => array(
-
+      'drop_table'=>array('users')
 		),
 	);
 
