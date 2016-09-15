@@ -58,11 +58,12 @@ class User extends AppModel {
 		)
 	);
 
-  public function isValidUser($username) {
+  public function isValidUser($data=array()) {
 
     return $this->find('first', array(
       'conditions' => array(
-        'User.username' => $username,
+        'User.username' => $data['username'],
+        'User.password' => $data['password'],
       ),
       'fields' => array('User.id', 'User.first_name', 'User.last_name', 'User.username','User.password','User.role'),
       'recursive' => -1

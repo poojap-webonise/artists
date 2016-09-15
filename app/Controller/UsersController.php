@@ -47,8 +47,9 @@ class UsersController extends AppController {
   public function login() {
     $this->set('login', 'login');
     if ($this->request->is('post')) {
-      $userExist = $this->User->isValidUser($this->request->data['User']['username']);
-      if($userExist['User']['password'] != $this->request->data['User']['password']) {
+      $userExist = $this->User->isValidUser($this->request->data['User']);
+      if(count($userExist) == 0)
+      {
         $this->Flash->error(__('Invalid username or password, try again'));
       }
       else{
