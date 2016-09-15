@@ -20,14 +20,16 @@
     <?php if($albums['sessionData']['role'] == 2)
     { ?>
 		<td class="actions">
+      <?php echo $this->Html->link(__('Add Photos'), array('action' => 'addPhoto', $album['Album']['id'])); ?>
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $album['Album']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $album['Album']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $album['Album']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $album['Album']['id']))); ?>
+			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $album['Album']['id']), array('confirm' => __('Are you sure you want to delete %s?', $album['Album']['title']))); ?>
 		</td>
     <?php }
     else{?>
     <td class="actions">
-      <?php echo $this->Html->link(__('View'), array('action' => 'view', $album['Album']['id'])); ?></td>
+      <?php echo $this->Html->link(__('View'), array('action' => 'view', $album['Album']['id'])); ?>
+      <?php echo $this->Html->link(__('Publish'), array('action' => 'publish', $album['Album']['id'])); ?></td>
   <?php  }?>
 	</tr>
 <?php endforeach; ?>

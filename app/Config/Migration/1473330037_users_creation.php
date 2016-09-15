@@ -74,6 +74,11 @@ class UsersCreation extends CakeMigration {
             'null' => true,
             'length' => 255
           ),
+          'email' => array(
+            'type' => 'string',
+            'null' => true,
+            'length' => 255
+          ),
 
         ),
 

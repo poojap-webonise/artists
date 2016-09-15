@@ -6,11 +6,11 @@
 		<legend><?php echo __('Add Album'); ?></legend>
 	<?php
     $userSession = $this->Session->read('User');
-    echo  $this->Form->input('user_id', array('type' => 'hidden','value'=> $userSession['userid']));
+    echo  $this->Form->input('album_id', array('type' => 'hidden','value'=> $albumData[0]['Album']['id']));
 
-		echo $this->Form->input('title');
+		echo $this->Form->input('title',array('value'=>$albumData[0]['Album']['title'],'readonly'=>true));
 
-		echo  $this->Form->input('upload', array('type' => 'file'));
+    echo  $this->Form->input('upload', array('type' => 'file'));
 
 	?>
 	</fieldset>

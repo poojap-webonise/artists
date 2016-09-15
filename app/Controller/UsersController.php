@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 App::uses('UsersAppModel', 'Users.Model');
 /**
@@ -27,7 +28,7 @@ class UsersController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Acl', 'Security', 'RequestHandler', 'Session', 'Flash');
+	public $components = array('Paginator', 'Acl', 'Security', 'RequestHandler', 'Session', 'Flash','Email');
 
 /**
  * index method
@@ -35,13 +36,16 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->User->recursive = 0;
-    $user['sessionData'] = $this->Session->read('User');
-    $user['paginator'] =  $this->Paginator->paginate();
-		$this->set('users', $user);
+    if($this->isAuthorized()) {
+      $this->User->recursive = 0;
+      $user['sessionData'] = $this->Session->read('User');
+      $user['paginator'] = $this->Paginator->paginate();
+      $this->set('users', $user);
+    }
 	}
 
   public function login() {
+    $this->set('login', 'login');
     if ($this->request->is('post')) {
       $userExist = $this->User->isValidUser($this->request->data['User']['username']);
       if($userExist['User']['password'] != $this->request->data['User']['password']) {
@@ -83,12 +87,14 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->User->find('first', $options));
-	}
+    if($this->isAuthorized()) {
+      if(!$this->User->exists($id)) {
+        throw new NotFoundException(__('Invalid user'));
+      }
+      $options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+      $this->set('user', $this->User->find('first', $options));
+    }
+  }
 
 /**
  * add method
@@ -96,14 +102,27 @@ class UsersController extends AppController {
  * @return void
  */
 	public function add() {
+    if($this->isAuthorized()) {
 		if ($this->request->is('post')) {
-			$this->User->create();
-			if ($this->User->save($this->request->data)) {
-				$this->Flash->success(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
-			}
+      $userExist = $this->User->isUserExist($this->request->data['User']['username']);
+      if(count($userExist) > 0) {
+        $this->Flash->error(__('Username already exists. Please, try again with different Username.'));
+      } else {
+        $this->User->create();
+        if($this->User->save($this->request->data)) {
+          $Email = new CakeEmail();
+          $Email->from(array('pooja.pawar@weboniselab.com' => 'My Site'));
+          $Email->to($this->request->data['User']['email']);
+          $Email->subject('Password');
+          $Email->send('Current Password : ' . $this->request->data['User']['password']);
+          $this->Flash->success(__('The user has been saved.'));
+
+          return $this->redirect(array('action' => 'index'));
+        } else {
+          $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+      }
+     }
 		}
 	}
 
@@ -115,20 +134,23 @@ class UsersController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->User->save($this->request->data)) {
-				$this->Flash->success(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
-		}
+    if($this->isAuthorized()) {
+      if(!$this->User->exists($id)) {
+        throw new NotFoundException(__('Invalid user'));
+      }
+      if($this->request->is(array('post', 'put'))) {
+        if($this->User->save($this->request->data)) {
+          $this->Flash->success(__('The user has been saved.'));
+
+          return $this->redirect(array('action' => 'index'));
+        } else {
+          $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+      } else {
+        $options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+        $this->request->data = $this->User->find('first', $options);
+      }
+    }
 	}
 
 /**
@@ -139,16 +161,51 @@ class UsersController extends AppController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->User->delete()) {
-			$this->Flash->success(__('The user has been deleted.'));
-		} else {
-			$this->Flash->error(__('The user could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+    if($this->isAuthorized()) {
+      $this->User->id = $id;
+      if(!$this->User->exists()) {
+        throw new NotFoundException(__('Invalid user'));
+      }
+      $this->request->allowMethod('post', 'delete');
+      if($this->User->delete()) {
+        $this->Flash->success(__('The user has been deleted.'));
+      } else {
+        $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+      }
+
+      return $this->redirect(array('action' => 'index'));
+    }
 	}
+
+  public function changePassword()
+  {
+    if($this->isAuthorized()) {
+      $user['sessionData'] = $this->Session->read('User');
+      if(count($user['sessionData']) > 0) {
+        if($this->request->is('post')) {
+          $this->User->id = $user['sessionData']['userid'];
+          $this->User->save($this->request->data);
+          if($user['sessionData']['role'] == 2) {
+            return $this->redirect((array('controller' => 'albums', 'action' => 'index')));
+          } else {
+            $this->redirect((array('controller' => 'users', 'action' => 'index')));
+          }
+        }
+      }
+    }
+  }
+
+  public function isAuthorized()
+  {
+    $user['sessionData'] = $this->Session->read('User');
+    if(count($user['sessionData'])>0)
+    {
+      return true;
+    }
+    else{
+      $this->redirect(array(
+        'controller' => 'users',
+        'action' => 'login'));
+    }
+  }
 }

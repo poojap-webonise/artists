@@ -22,6 +22,22 @@ class Album extends AppModel {
  *
  * @var array
  */
+  public $hasMany = array(
+    'Photo' => array(
+      'className' => 'Photo',
+      'foreignKey' => 'album_id',
+      'dependent' => false,
+      'conditions' => '',
+      'fields' => '',
+      'order' => '',
+      'limit' => '',
+      'offset' => '',
+      'exclusive' => '',
+      'finderQuery' => '',
+      'counterQuery' => ''
+    )
+  );
+
 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -32,11 +48,29 @@ class Album extends AppModel {
 		)
 	);
 
-  public function getAlbumsByUserid($userid) {
-    if($userid > 1) {
+  public function getAlbumsByUserid($userid,$role) {
+    if($role > 1) {
         return $this->find('all', array(
         'conditions' => array(
           'Album.user_id' => $userid,
+        ),
+        'fields' => array('Album.id', 'Album.title', 'Album.user_id'),
+        'recursive' => -1
+      ));
+    }
+    else{
+      return $this->find('all', array(
+        'fields' => array('Album.id', 'Album.title', 'Album.user_id'),
+        'recursive' => -1
+      ));
+    }
+  }
+
+  public function getAlbumDataById($album_id) {
+    if($album_id > 1) {
+      return $this->find('all', array(
+        'conditions' => array(
+          'Album.id' => $album_id,
         ),
         'fields' => array('Album.id', 'Album.title', 'Album.user_id'),
         'recursive' => -1

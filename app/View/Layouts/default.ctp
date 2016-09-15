@@ -38,8 +38,15 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version());
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, ''); ?></h1>
-    <?php echo $this->Html->link(__('Logout'), array('action' => 'logout')); ?>
+			<h1><?php echo $this->Html->link($cakeDescription, '');
+        $sessdata = $this->Session->read('User');?></h1>
+      <?php if(!isset($login) && count($sessdata) > 0){
+        ?>
+      <?php echo $this->Html->link(__('Logout'), array('controller'=>'users','action' => 'logout')); ?>
+      <?php echo '</br>'. $this->Html->link(__('Change Password'), array('controller'=>'users','action' => 'changePassword')); ?>
+      <?php } ?>
+      <?php
+      echo '</br>'.$this->Html->link(__('View Gallery'), array('controller'=>'gallery','action' => 'index')); ?>
 		</div>
 		<div id="content">
 
